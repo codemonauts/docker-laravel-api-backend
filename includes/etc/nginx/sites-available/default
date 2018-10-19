@@ -1,7 +1,7 @@
 server {
        	listen 80 default_server;
        	listen [::]:80 default_server;
-	client_max_body_size 512M;
+		client_max_body_size 512M;
 
        	root /local/public;
 
@@ -10,8 +10,8 @@ server {
        	server_name localhost;
 
        	location / {
-                rewrite ^(.*)\.[\d]+\.(css|js)$ $1.$2 last;
-		rewrite ^\/vendor\/[\d]+\/(.*) /vendor/$1 last;
+			rewrite ^(.*)\.[\d]+\.(css|js)$ $1.$2 last;
+			rewrite ^\/vendor\/[\d]+\/(.*) /vendor/$1 last;
        		try_files $uri $uri/ /index.php?$query_string;
        	}
 
