@@ -1,0 +1,27 @@
+server {
+       	listen 80 default_server;
+       	listen [::]:80 default_server;
+	client_max_body_size 512M;
+
+       	root /local/public;
+
+       	index index.php index.html;
+
+       	server_name localhost;
+
+       	location / {
+                rewrite ^(.*)\.[\d]+\.(css|js)$ $1.$2 last;
+		rewrite ^\/vendor\/[\d]+\/(.*) /vendor/$1 last;
+       		try_files $uri $uri/ /index.php?$query_string;
+       	}
+
+       	location ~ \.php$ {
+       		include snippets/fastcgi-php.conf;
+       		fastcgi_pass unix:/run/php/php7.2-fpm.sock;
+       		fastcgi_read_timeout 300;
+       	}
+
+       	location ~ /\.ht {
+       		deny all;
+       	}
+}
